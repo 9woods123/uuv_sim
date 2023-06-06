@@ -1,0 +1,24 @@
+<launch>
+    <!-- Vehicle's initial position -->
+    <arg name="x" default="-100"/>
+    <arg name="y" default="85"/>
+    <arg name="z" default="-88"/>
+    <arg name="yaw" default="0"/>
+    <arg name="use_ned_frame" default="false"/>
+
+
+
+
+    <include file="$(find eca_a9_description)/launch/upload_eca_a9.launch">
+        <arg name="x" value="$(arg x)"/>
+        <arg name="y" value="$(arg y)"/>
+        <arg name="z" value="$(arg z)"/>
+        <arg name="yaw" value="$(arg yaw)"/>
+    </include>
+
+
+    <include file="$(find eca_a9_control)/launch/start_geometric_tracking_control.launch"/>
+
+
+
+</launch>
