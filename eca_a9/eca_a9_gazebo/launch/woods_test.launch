@@ -1,0 +1,127 @@
+<launch>
+  <!-- Vehicle's initial position -->
+  <arg name="x" default="20"/>
+  <arg name="y" default="0"/>
+  <arg name="z" default="-25"/>
+  <arg name="yaw" default="0"/>
+
+
+  <arg name="use_ned_frame" default="false"/>
+
+  <arg name="joy_id" default="0"/>
+  <arg name="pointcloud_out" default="/eca_a9/blueview_m450/point_cloud"/>
+
+  <include file="$(find eca_a9_description)/launch/upload_eca_a9.launch">
+    <arg name="x" value="$(arg x)"/>
+    <arg name="y" value="$(arg y)"/>
+    <arg name="z" value="$(arg z)"/>
+    <arg name="yaw" value="$(arg yaw)"/>
+  </include>
+
+
+  <!-- Initialize the recording fo the simulation according to the record flag  -->
+
+  <include file="$(find eca_a9_control)/launch/start_geometric_tracking_control.launch"/>
+
+  <arg name="voxel_size" default="1"/>
+  <arg name="voxels_per_side" default="16"/>
+  <arg name="ray_length" default="150"/>
+  <arg name="method" default="fast"/>
+  <arg name="verbose_voxblox" default="false"/>
+
+
+
+  <node name="voxblox_node" pkg="voxblox_ros" type="esdf_server" output="screen" args="-alsologtostderr">
+  <remap from="pointcloud" to="$(arg pointcloud_out)"/>
+  <param name="use_tf_transforms" value="true"/>
+  <param name="publish_tsdf_map" value="true" />
+  <param name="publish_esdf_map" value="true" />
+  <param name="tsdf_voxel_size" value="$(arg voxel_size)" />
+  <param name="tsdf_voxels_per_side" value="$(arg voxels_per_side)" />
+  <param name="color_mode" value="color" />
+  <param name="update_mesh_every_n_sec" value="1.0" />
+  <param name="method" value="$(arg method)" />
+  <param name="max_ray_length_m" value="$(arg ray_length)" />
+  <param name="allow_clear" value="true" />
+  <param name="verbose" value="$(arg verbose_voxblox)" />
+</node>
+
+
+  <arg name="planner_config" default="planners/woods_maze_planner.yaml"/>
+  <node name="planner_node" pkg="active_3d_planning_app_reconstruction" type="reconstruction_planner_node" output="screen">
+		  <!-- Voxblox Server -->
+      <!-- <remap from="pointcloud" to="$(arg pointcloud_out)"/> -->
+      <remap from="planner_node/esdf_map_in" to="voxblox_node/esdf_map_out" />
+      <remap from="planner_node/tsdf_map_in" to="voxblox_node/tsdf_map_out" />
+      <param name="use_tf_transforms" value="false" />
+      <param name="tsdf_voxel_size" value="$(arg voxel_size)" />
+      <param name="tsdf_voxels_per_side" value="$(arg voxels_per_side)" />
+      <param name="update_mesh_every_n_sec" value="0.0" />   
+      <param name="publish_traversable" value="true" />    
+      <param name="publish_pointclouds" value="true" />              
+
+    	<!-- General Settings -->
+      <!-- <remap from="odometry" to="/$(arg mav_name)/ground_truth/odometry" />
+      <remap from="command/trajectory" to="/$(arg mav_name)/command/trajectory" />
+      <remap from="traj_server/trajectory" to="/$(arg mav_name)/traj_server/trajectory" />
+      <remap from="replan_singal" to="/$(arg mav_name)/replan_singal" /> -->
+
+      <!-- Build the Planner by Configuration     -->
+      <rosparam command="load" file="$(find active_3d_planning_app_reconstruction)/cfg/$(arg planner_config)"/>
+  </node>    
+  
+
+
+  <arg name="map_file" default="$(find my_package)/maps/my_map.bt" />
+
+  <!-- 启动 Octomap_server 节点 -->
+  <node pkg="octomap_server" type="octomap_server_node" name="octomap_server" output="screen">
+    <!-- 订阅深度信息 -->
+    <remap from="camera/depth/points" to="/camera/depth_registered/points"/>
+    <!-- 保存二进制栅格地图文件 -->
+    <param name="octomap_binary_filename" value="$(arg map_file)"/>
+    <!-- 分辨率 (默认为0.05) -->
+    <param name="resolution" value="0.1" />
+    <!-- 坐标系名称 (默认为map) -->
+    <param name="frame_id" value="map" />
+    <!-- 更新周期 (默认为1.0) -->
+    <param name="octomap_update_period" value="0.5"/>
+    <!-- 是否将遍历到的区域标记为free（默认为false） -->
+    <param name="latch_free" value="true"/>
+    <!-- 障碍物最大高度，超过此高度的障碍物将被忽略（默认为2.0）-->
+    <param name="max_height" value="3.0"/>
+    <!-- 是否发布full map（默认为false）-->
+    <param name="publish_full_map" value="true"/>
+    <!-- 是否在完成地图后保存地图（默认为true）-->
+    <param name="save_on_shutdown" value="false"/>
+    <!-- 是否进行点云插入之前的体素滤波（默认为true）-->
+    <param name="use_voxel_filter" value="false"/>
+    <!-- 进行体素滤波的voxel大小（默认为0.01）-->
+    <param name="voxel_size" value="0.02"/>
+    <!-- 使用带噪声的数据（默认为false）-->
+    <param name="use_noisy_sensor" value="false"/>
+    <!-- 噪声模型参数 (默认值为0.1)-->
+    <param name="sensor_model_hit" value="0.7"/>
+    <param name="sensor_model_miss" value="0.4"/>
+    <param name="sensor_model_min" value="0.12"/>
+    <param name="sensor_model_max" value="0.97"/>
+    <!-- 是否使用octovis工具（默认为false）-->
+    <param name="use_octovis" value="false"/>
+    <!-- 由于octovis的缺点是不能运行ROS节点，因此需要手动调用octovis -->
+    <param name="octovis_command_line" value="octovis $(arg map_file)"/>
+  </node>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</launch>

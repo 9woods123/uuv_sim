@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/woods/uuv/dave_ws/src/uuv_simulator/uuv_control/uuv_trajectory_control/cmake-build-debug/devel/setup.sh
