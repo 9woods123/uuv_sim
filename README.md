@@ -3,14 +3,6 @@
 **uuv_sim** is a package including  eca_a9 equiped with multi-beam sonar
 
 
-* **voxblox:**
-
-   Using voxblox as map representation and modules specific to voxblox. Dependencies:
-    * `voxblox` ([https://github.com/ethz-asl/voxblox](https://github.com/ethz-asl/voxblox))
-
-## Installation
-Installation instructions for Linux.
-
 **Prerequisites**
 
 1. If not already done so, install [ROS](http://wiki.ros.org/ROS/Installation) (Desktop-Full is recommended).
@@ -20,29 +12,15 @@ Installation instructions for Linux.
 ```shell script
 sudo apt-get install python-catkin-tools
 mkdir -p ~/catkin_ws/src
+git clone https://github.com/9woods123/uuv_sim.git
 cd ~/catkin_ws
-catkin init
-catkin config --extend /opt/ros/melodic  # exchange melodic for your ros distro if necessary
-catkin config --cmake-args -DCMAKE_BUILD_TYPE=Release
-catkin config --merge-devel
+catkin_make
 ```
 
-**Installation**
-
-1. Move to your catkin workspace: 
-```shell script
-cd ~/catkin_ws/src
-```
 
 2. Install system dependencies: 
 ```shell script
 sudo apt-get install python-wstool python-catkin-tools
-```
-
-3. Download repo using a SSH key or via HTTPS: 
-```shell script
-git clone git@github.com:9woods123/mav_unknown_exploration.git # SSH
-git clone https://github.com/9woods123/mav_unknown_exploration.git # HTTPS
 ```
 
 4. Download and install the dependencies of the packages you intend to use.
