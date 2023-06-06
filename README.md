@@ -17,41 +17,25 @@ cd ~/catkin_ws
 catkin_make
 ```
 
-
-2. Install system dependencies: 
-```shell script
-sudo apt-get install python-wstool python-catkin-tools
-```
-
-4. Download and install the dependencies of the packages you intend to use.
-
-   * **Full Install:** dependencies of **all** packages can be installed using rosinstall:
-   ```shell script
-   # system dependencies, replace melodic with your ros distro if necessary:
-   sudo apt-get install ros-melodic-cmake-modules ros-melodic-control-toolbox ros-melodic-joy ros-melodic-octomap-ros ros-melodic-mavlink ros-melodic-geographic-msgs autoconf libyaml-cpp-dev protobuf-compiler libgoogle-glog-dev liblapacke-dev libgeographic-dev
-   pip install future unrealcv
-
-   # If you already intialized ws tool use 'wstool merge -t'
-   wstool init . ./mav_active_3d_planning/mav_active_3d_planning_ssh.rosinstall # SSH
-   wstool init . ./mav_active_3d_planning/mav_active_3d_planning_https.rosinstall # HTTPS
-   wstool update
-   ```
-   * **Partial Install:** Install dependencies of the packages you intend to use ([listed above](#Dependencies)) and remove unwanted packages from `mav_active_3d_planning/package.xml` as well as their source folders.
-
-5. Source and compile: 
-```shell script
-source ../devel/setup.bash
-catkin build mav_active_3d_planning # Builds this package only
-catkin build # Builds entire workspace, recommended for full install.
-```
-
 ## Run an Experiment
-In order to record data of the example planner, run 
+
+In order to launch a auv, firstly launch a gazebo world:
+
 ```
-roslaunch active_3d_planning_app_reconstruction example_gazebo.launch
+roslaunch uuv_gazebo_worlds ocean_waves.launch 
 ```
-and run 
+
 ```
-rosservice call /planner/planner_node/toggle_running 1
+ roslaunch eca9_a9_gazebo eca9_a9_upload.launch
 ```
-after mav turning to hovering to start the exploration.
+![2023-05-11 16-51-14 的屏幕截图](https://github.com/9woods123/uuv_sim/assets/78521063/e634767f-d5ca-432e-abdb-6521d450fa0d)
+
+if you want to set the equiped attitude of multi-beam sonar, see the file`eca_a9_sensors_woods.xacro `
+
+and change the params in:
+```
+  <xacro:include filename="$(find nps_uw_multibeam_sonar)/urdf/woods_multibeam.xacro"/>
+    <xacro:blueview_sonar sensor_name="/sonar" parent_link="${namespace}/base_link" rate="30">
+       <origin xyz="0.5  0 -0.1" rpy=" 0  0.05 0"/>
+      </xacro:blueview_sonar>
+```
