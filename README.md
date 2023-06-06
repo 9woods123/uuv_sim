@@ -30,6 +30,14 @@ roslaunch uuv_gazebo_worlds ocean_waves.launch
 ```
 ![2023-05-11 16-51-14 的屏幕截图](https://github.com/9woods123/uuv_sim/assets/78521063/e634767f-d5ca-432e-abdb-6521d450fa0d)
 
+
+The pointcloud info can be get by  subscribing the topic `/eca_a9/blueview_m450/point_cloud`
+
+The pointcloud in rviz:
+![2023-06-06 14-26-57 的屏幕截图](https://github.com/9woods123/uuv_sim/assets/78521063/7d74f133-129d-4184-ad6c-eab1d5f28ed5)
+
+
+## appendies
 if you want to set the equiped attitude of multi-beam sonar, see the file`eca_a9_sensors_woods.xacro `
 
 and change the params in:
