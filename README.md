@@ -30,17 +30,15 @@ roslaunch uuv_gazebo_worlds ocean_waves.launch
 ```
 ![2023-05-11 16-51-14 的屏幕截图](https://github.com/9woods123/uuv_sim/assets/78521063/e634767f-d5ca-432e-abdb-6521d450fa0d)
 
+You can obtain the point cloud information by subscribing to the topic /eca_a9/blueview_m450/point_cloud.
 
-The pointcloud info can be get by  subscribing the topic `/eca_a9/blueview_m450/point_cloud`
-
-The pointcloud in rviz:
+The point cloud can be visualized in RViz:
 ![2023-06-06 14-26-57 的屏幕截图](https://github.com/9woods123/uuv_sim/assets/78521063/7d74f133-129d-4184-ad6c-eab1d5f28ed5)
 
 
 ## Modify the Sonar 
-if you want to set the equiped attitude of multi-beam sonar, see the file`eca_a9_sensors_woods.xacro `
 
-and change the params in:
+If you want to adjust the orientation of the multi-beam sonar, you can modify the file eca_a9_sensors_woods.xacro and change the parameters in the following section:
 ```
   <xacro:include filename="$(find nps_uw_multibeam_sonar)/urdf/woods_multibeam.xacro"/>
     <xacro:blueview_sonar sensor_name="/sonar" parent_link="${namespace}/base_link" rate="30">
@@ -69,6 +67,11 @@ for(auto traj_point : your_target_traj)
 }
 
 traj_pub.publish(planned_traj);
-
 }
 ```
+
+The AUV control code in uuv_simulator（ https://github.com/9woods123/uuv_sim/uuv_simulator ） is an updated version of the original uuv_simulator(https://github.com/uuvsimulator/uuv_simulator).
+
+I made some modifications to enable the AUV to follow a new trajectory when the previous trajectory is not finished. Therefore, you can use an online planner to command the AUV.
+
+
