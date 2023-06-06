@@ -17,7 +17,7 @@ cd ~/catkin_ws
 catkin_make
 ```
 
-## Run an Experiment
+## Run An Experiment
 
 In order to launch a auv, firstly launch a gazebo world:
 
@@ -37,7 +37,7 @@ The pointcloud in rviz:
 ![2023-06-06 14-26-57 的屏幕截图](https://github.com/9woods123/uuv_sim/assets/78521063/7d74f133-129d-4184-ad6c-eab1d5f28ed5)
 
 
-## appendies
+## Modify the Sonar 
 if you want to set the equiped attitude of multi-beam sonar, see the file`eca_a9_sensors_woods.xacro `
 
 and change the params in:
@@ -46,4 +46,29 @@ and change the params in:
     <xacro:blueview_sonar sensor_name="/sonar" parent_link="${namespace}/base_link" rate="30">
        <origin xyz="0.5  0 -0.1" rpy=" 0  0.05 0"/>
       </xacro:blueview_sonar>
+```
+
+## Input Contorl Trajectory 
+
+if you wanna give the AUV a target trajectory which  is  calculated by your planning algorithm, and make the  AUV tracking it, a example code 
+is given:
+
+```
+#include <uuv_control_msgs/Trajectory.h>
+
+ros::Publisher  traj_pub=nh.advertise<uuv_control_msgs::Trajectory>("/eca_a9/input_trajectory", 1, true);
+
+uuv_control_msgs::Trajectory planned_traj;
+for(auto traj_point : your_target_traj)
+{
+     uuv_control_msgs::TrajectoryPoint traj_point;
+     traj_point.header.stamp=traj_point.time;
+     traj_point.header.frame_id=your_target_traj.frame_id;
+     traj_point.pose=traj_point.pose;
+     planned_traj.points.push_back(traj_point);
+}
+
+traj_pub.publish(planned_traj);
+
+}
 ```
