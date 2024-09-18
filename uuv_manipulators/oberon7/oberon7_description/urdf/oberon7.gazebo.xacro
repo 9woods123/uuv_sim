@@ -1,0 +1,79 @@
+<robot xmlns:xacro="http://wiki.ros.org/xacro">
+	<xacro:macro name="oberon7_arm_gazebo" params="namespace">
+		<gazebo reference="${namespace}/base">
+			<selfCollide>false</selfCollide>
+			<maxContacts>1</maxContacts>
+			<gravity>1</gravity>
+		</gazebo>
+		<gazebo reference="${namespace}/shoulder_link">
+			<selfCollide>false</selfCollide>
+			<maxContacts>1</maxContacts>
+			<gravity>1</gravity>
+		</gazebo>
+		<gazebo reference="${namespace}/upper_arm">
+			<selfCollide>false</selfCollide>
+			<maxContacts>1</maxContacts>
+			<gravity>1</gravity>
+		</gazebo>
+		<gazebo reference="${namespace}/elbow_link">
+			<selfCollide>false</selfCollide>
+			<maxContacts>1</maxContacts>
+			<gravity>1</gravity>
+		</gazebo>
+		<gazebo reference="${namespace}/forearm">
+			<selfCollide>false</selfCollide>
+			<maxContacts>1</maxContacts>
+			<gravity>1</gravity>
+		</gazebo>
+		<gazebo reference="${namespace}/wrist_link">
+			<selfCollide>false</selfCollide>
+			<maxContacts>1</maxContacts>
+			<gravity>1</gravity>
+		</gazebo>
+		<gazebo reference="${namespace}/end_effector">
+			<selfCollide>false</selfCollide>
+			<maxContacts>1</maxContacts>
+			<gravity>1</gravity>
+		</gazebo>
+		<gazebo reference="${namespace}/finger_left">
+			<selfCollide>false</selfCollide>
+    		<kp>1000000.0</kp>
+    		<kd>1.0</kd>
+    		<mu1>100.0</mu1>
+    		<mu2>50.0</mu2>
+    		<minDepth>0.001</minDepth>
+    		<maxContacts>1</maxContacts>
+    		<implicitSpringDamper>1</implicitSpringDamper>
+		</gazebo>
+		<gazebo reference="${namespace}/finger_tip_left">
+ 			<selfCollide>false</selfCollide>
+    		<kp>1000000.0</kp>
+    		<kd>1.0</kd>
+    		<mu1>100.0</mu1>
+    		<mu2>50.0</mu2>
+    		<minDepth>0.001</minDepth>
+    		<maxContacts>3</maxContacts>
+    		<implicitSpringDamper>1</implicitSpringDamper>
+		</gazebo>
+		<gazebo reference="${namespace}/finger_right">
+ 			<selfCollide>false</selfCollide>
+    		<kp>1000000.0</kp>
+    		<kd>1.0</kd>
+    		<mu1>100.0</mu1>
+    		<mu2>50.0</mu2>
+    		<minDepth>0.001</minDepth>
+    		<maxContacts>1</maxContacts>
+    		<implicitSpringDamper>1</implicitSpringDamper>
+		</gazebo>
+		<gazebo reference="${namespace}/finger_tip_right">
+ 			<selfCollide>false</selfCollide>
+    		<kp>1000000.0</kp>
+    		<kd>1.0</kd>
+    		<mu1>100.0</mu1>
+    		<mu2>50.0</mu2>
+    		<minDepth>0.001</minDepth>
+    		<maxContacts>3</maxContacts>
+    		<implicitSpringDamper>1</implicitSpringDamper>
+		</gazebo>
+	</xacro:macro>
+</robot>

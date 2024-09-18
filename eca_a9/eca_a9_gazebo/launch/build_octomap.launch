@@ -1,0 +1,44 @@
+<launch>
+  <!-- Vehicle's initial position -->
+  <arg name="x" default="20"/>
+  <arg name="y" default="0"/>
+  <arg name="z" default="-25"/>
+  <arg name="yaw" default="0"/>
+
+
+  <arg name="use_ned_frame" default="false"/>
+
+  <arg name="joy_id" default="0"/>
+  <arg name="pointcloud_out" default="/eca_a9/blueview_m450/point_cloud"/>
+
+  <include file="$(find eca_a9_description)/launch/upload_eca_a9.launch">
+    <arg name="x" value="$(arg x)"/>
+    <arg name="y" value="$(arg y)"/>
+    <arg name="z" value="$(arg z)"/>
+    <arg name="yaw" value="$(arg yaw)"/>
+  </include>
+
+
+  <!-- Initialize the recording fo the simulation according to the record flag  -->
+
+  <include file="$(find eca_a9_control)/launch/start_geometric_tracking_control.launch"/>
+
+
+    <arg name="map_file" default="$(find eca_a9_gazebo)/map/my_map.bt" />
+
+  <node name="octomap_server" pkg="octomap_server" type="octomap_server_node" output="screen">
+    <remap from="cloud_in" to="$(arg pointcloud_out)"/> <!-- 输入点云的话题 -->
+    <param name="frame_id" type="string" value="world"/> <!-- 点云和八叉树的参考系 -->
+    <param name="resolution" type="double" value="0.5"/> <!-- 八叉树分辨率 -->
+    <param name="publish_all" type="bool" value="true"/> <!-- 发布全部八叉树节点，而不是只发布占据的节点 -->
+    <param name="color_mode" type="string" value="true"/> <!-- 使用颜色 Octomap 模式 -->
+    <param name="filtered_cloud" type="bool" value="false"/> <!-- 点云是否被滤波 -->
+    <param name="sensor_model/max_range" type="double" value="150"/> <!-- 相机最大探测距离 -->
+    <param name="sensor_model/min_range" type="double" value="1"/> <!-- 相机最小探测距离 -->
+      <param name="saveOctomapToFile" value="true"/>  <!-- enable saving the map -->
+      <param name="fileName" value="$(arg map_file)"/>  <!-- file name and location to save the map -->
+      
+  </node>
+<!-- rosrun octomap_server octomap_saver -f name_of_map.bt octomap_full:=/robot/octomap_full -->
+<!-- rosrun octomap_server octomap_saver -f name_of_map.ot -->
+</launch>

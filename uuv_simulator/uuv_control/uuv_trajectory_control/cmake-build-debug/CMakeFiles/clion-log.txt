@@ -1,0 +1,20 @@
+/usr/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/woods/uuv/dave_ws/src/uuv_simulator/uuv_control/uuv_trajectory_control
+-- Using CATKIN_DEVEL_PREFIX: /home/woods/uuv/dave_ws/src/uuv_simulator/uuv_control/uuv_trajectory_control/cmake-build-debug/devel
+-- Using CMAKE_PREFIX_PATH: /home/woods/uuv/motion_planning/local_planner_ws/devel;/home/woods/uuv/motion_planning/HAstar_ws/devel;/home/woods/uuv/mp_ws/devel;/home/woods/uuv/dave_ws/devel;/home/woods/AirSim/ros/devel;/home/woods/real_uav_ws/devel;/home/woods/exploration/planning/devel;/opt/ros/melodic
+-- This workspace overlays: /home/woods/uuv/motion_planning/local_planner_ws/devel;/home/woods/uuv/motion_planning/HAstar_ws/devel;/home/woods/uuv/mp_ws/devel;/home/woods/uuv/dave_ws/devel;/home/woods/AirSim/ros/devel;/home/woods/real_uav_ws/devel;/home/woods/exploration/planning/devel;/opt/ros/melodic
+-- Found PythonInterp: /usr/bin/python2 (found suitable version "2.7.17", minimum required is "2") 
+-- Using PYTHON_EXECUTABLE: /usr/bin/python2
+-- Using Debian Python package layout
+-- Using empy: /usr/bin/empy
+-- Using CATKIN_ENABLE_TESTING: ON
+-- Call enable_testing()
+-- Using CATKIN_TEST_RESULTS_DIR: /home/woods/uuv/dave_ws/src/uuv_simulator/uuv_control/uuv_trajectory_control/cmake-build-debug/test_results
+-- Found gtest sources under '/usr/src/googletest': gtests will be built
+-- Found gmock sources under '/usr/src/googletest': gmock will be built
+-- Found PythonInterp: /usr/bin/python2 (found version "2.7.17") 
+-- Using Python nosetests: /usr/bin/nosetests-2.7
+-- catkin 0.7.29
+-- BUILD_SHARED_LIBS is on
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/woods/uuv/dave_ws/src/uuv_simulator/uuv_control/uuv_trajectory_control/cmake-build-debug

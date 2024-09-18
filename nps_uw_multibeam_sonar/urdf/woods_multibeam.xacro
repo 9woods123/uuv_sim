@@ -1,0 +1,149 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find nps_uw_multibeam_sonar)/urdf/inertia_calc.xacro"/>
+  <xacro:macro name="blueview_sonar" params="sensor_name parent_link *origin rate">
+
+    <xacro:property name="d435_cam_depth_to_left_ir_offset" value="0.0"/>
+    <xacro:property name="d435_cam_depth_to_right_ir_offset" value="-0.050"/>
+    <xacro:property name="d435_cam_depth_to_color_offset" value="0.015"/>
+    <xacro:property name="d435_cam_width" value="0.090"/>
+    <xacro:property name="d435_cam_height" value="0.025"/>
+    <xacro:property name="d435_cam_depth" value="0.02505"/>
+    <xacro:property name="d435_cam_mass" value="0.1"/>
+    <xacro:property name="d435_cam_mount_from_center_offset" value="0.0149"/>
+    <xacro:property name="d435_cam_depth_px" value="${d435_cam_mount_from_center_offset}"/>
+    <xacro:property name="d435_cam_depth_py" value="0.0175"/>
+    <xacro:property name="d435_cam_depth_pz" value="${d435_cam_height/2}"/>
+
+    <!-- camera body, with origin at bottom screw mount -->
+    <joint name="${sensor_name}_joint" type="fixed">
+      <xacro:insert_block name="origin" />
+      <parent link="${parent_link}"/>
+      <child link="${sensor_name}_bottom_screw_frame" />
+    </joint>
+    <link name="${sensor_name}_bottom_screw_frame"/>
+
+    <joint name="${sensor_name}_link_joint" type="fixed">
+      <origin xyz="0 ${d435_cam_depth_py} ${d435_cam_depth_pz}" rpy="0 0 0"/>
+      <parent link="${sensor_name}_bottom_screw_frame"/>
+      <child link="${sensor_name}_link" />
+    </joint>
+
+
+  <!-- 定义传感器link的名称 -->
+  <!-- 定义相对于inertial frame的pose -->
+  <!-- 定义想要的mass，inertia的参数 -->
+  <xacro:property name="pose" value="0 0 0 0 0 1.57"/>
+  <xacro:property name="mass" value="0.01"/>
+  <xacro:property name="ixx" value="0.0191"/>  <!-- as 2/5mr^2 -->
+  <xacro:property name="ixy" value="0"/>
+  <xacro:property name="ixz" value="0"/>
+  <xacro:property name="iyy" value="0.0191"/>
+  <xacro:property name="iyz" value="0"/>
+  <xacro:property name="izz" value="0.0191"/>
+
+
+  <link name="${sensor_name}_link">
+  <visual name="visual">
+     <origin rpy="0 0 1.57" xyz="0 0 0"/>
+    <geometry>
+      <mesh filename="package://nps_uw_multibeam_sonar/models/blueview_m450_nps_multibeam/meshes/BlueView-M450.dae"/>
+    </geometry>
+  </visual>
+    <collision name="collision">
+      <origin rpy="0 0 1.57" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://nps_uw_multibeam_sonar/models/blueview_m450_nps_multibeam/meshes/COLLISION-BlueView-M450.dae"/>
+      </geometry>
+    </collision>
+    <inertial>
+       <origin rpy="0 0 1.57" xyz="0 0 0"/>
+      <mass value="${mass}"/>
+      <inertia 
+            ixx="${ixx}" 
+            ixy="${ixy}" 
+            ixz="${ixz}"
+            iyy="${iyy}"
+            iyz="${iyz}" 
+            izz="${izz}" />
+       </inertial>
+  </link>
+
+
+    <!-- camera depth joints and links -->
+    <joint name="${sensor_name}_depth_joint" type="fixed">
+      <origin xyz="0 0 0" rpy="1.57 3.14 1.57"/>
+      <parent link="${sensor_name}_link"/>
+      <child link="${sensor_name}_depth_frame" />
+    </joint>
+    <link name="${sensor_name}_depth_frame"/>
+
+    <!-- gazebo plugin -->
+
+    <gazebo reference="${sensor_name}_link">
+      <self_collide>0</self_collide>
+      <enable_wind>0</enable_wind>
+      <kinematic>0</kinematic>
+      <gravity>1</gravity>
+      <mu2>1</mu2>
+      <fdir1>0 0 0</fdir1>
+      <kp>1e+13</kp>
+      <kd>1</kd>
+
+      <sensor name="multieam_sonar" type="depth">
+            <visualize>false</visualize>
+            <always_on>true</always_on>
+            <update_rate>10</update_rate>
+            <camera>
+              <!-- 90 degrees for the M450-90 -->
+              <horizontal_fov>1.54719755</horizontal_fov>
+              <image>
+                <width>512</width>
+                <!-- Set vertical FOV by setting image height -->
+                <!-- Approx 2 times the spec sheet (sepc: 10 deg.) -->
+                <height>114</height>
+                <format>R8G8B8</format>
+              </image>
+              <clip>
+                <near>1</near>
+                <far>100</far>
+              </clip>
+              <depth_camera>
+                <output>depths</output>
+              </depth_camera>
+              <save enabled="true">
+                <path>/tmp/camera</path>
+              </save>
+            </camera>
+            <plugin filename="libnps_multibeam_sonar_ros_plugin.so" name="forward_sonar">
+              <!-- Sonar properties -->
+              <verticalFOV>10</verticalFOV>
+              <sonarFreq>450e3</sonarFreq>
+              <bandwidth>29.9e3</bandwidth>
+              <soundSpeed>1500</soundSpeed>
+              <sourceLevel>220</sourceLevel>
+              <maxDistance>100</maxDistance>
+              <constantReflectivity>true</constantReflectivity>
+              <raySkips>10</raySkips>
+              <sensorGain>0.02</sensorGain>
+              <plotScaler>0</plotScaler>
+              <writeLog>false</writeLog>
+              <debugFlag>false</debugFlag>
+              <writeFrameInterval>5</writeFrameInterval>
+              <!-- This name is prepended to ROS topics -->
+              <cameraName>blueview_m450</cameraName>
+              <!-- ROS publication topics -->
+              <imageTopicName>image_raw</imageTopicName>
+              <cameraInfoTopicName>image_raw/camera_info</cameraInfoTopicName>
+              <pointCloudTopicName>point_cloud</pointCloudTopicName>
+              <depthImageTopicName>image_depth</depthImageTopicName>
+              <depthImageCameraInfoTopicName>image_depth/camera_info</depthImageCameraInfoTopicName>
+              <sonarImageRawTopicName>sonar_image_raw</sonarImageRawTopicName>
+              <sonarImageTopicName>sonar_image</sonarImageTopicName>
+              <frameName>${sensor_name}_depth_frame</frameName>
+            </plugin>
+          </sensor>
+    </gazebo>
+  </xacro:macro>
+</robot>

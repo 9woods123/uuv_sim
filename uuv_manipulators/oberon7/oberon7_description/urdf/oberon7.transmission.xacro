@@ -1,0 +1,116 @@
+<robot xmlns:xacro="http://wiki.ros.org/xacro">
+	<xacro:macro name="oberon7_arm_transmission" params="hw_interface namespace">
+		
+		<!-- Base -> Shoulder Transmission -->
+		<transmission name="${namespace}/azimuth_trans">
+			<type>transmission_interface/SimpleTransmission</type>
+			<joint name="${namespace}/azimuth">
+				<hardwareInterface>${hw_interface}</hardwareInterface>
+			</joint>
+			<actuator name="${namespace}/azimuth_motor">
+				<mechanicalReduction>1</mechanicalReduction>
+			</actuator>
+		</transmission>
+
+		<!-- Shoulder -> Upper Arm Transmission -->
+		<transmission name="${namespace}/shoulder_trans">
+			<type>transmission_interface/SimpleTransmission</type>
+			<joint name="${namespace}/shoulder">
+				<hardwareInterface>${hw_interface}</hardwareInterface>
+			</joint>
+			<actuator name="${namespace}/shoulder_motor">
+				<mechanicalReduction>1</mechanicalReduction>
+			</actuator>
+		</transmission>
+
+		<!-- Upper Arm -> Elbow Transmission -->
+		<transmission name="${namespace}/elbow_trans">
+			<type>transmission_interface/SimpleTransmission</type>
+			<joint name="${namespace}/elbow">
+				<hardwareInterface>${hw_interface}</hardwareInterface>
+			</joint>
+			<actuator name="${namespace}/elbow_motor">
+				<mechanicalReduction>1</mechanicalReduction>
+			</actuator>
+		</transmission>
+
+		<!-- Elbow -> Forearm Transmission -->
+		<transmission name="${namespace}/roll_trans">
+			<type>transmission_interface/SimpleTransmission</type>
+			<joint name="${namespace}/roll">
+				<hardwareInterface>${hw_interface}</hardwareInterface>
+			</joint>
+			<actuator name="${namespace}/roll_motor">
+				<mechanicalReduction>1</mechanicalReduction>
+			</actuator>
+		</transmission>
+
+		<!-- Forearm -> Wrist Transmission -->
+		<transmission name="${namespace}/pitch_trans">
+			<type>transmission_interface/SimpleTransmission</type>
+			<joint name="${namespace}/pitch">
+				<hardwareInterface>${hw_interface}</hardwareInterface>
+			</joint>
+			<actuator name="${namespace}/pitch_motor">
+				<mechanicalReduction>1</mechanicalReduction>
+			</actuator>
+		</transmission>
+
+		<!-- Wrist -> End Effector Transmission -->
+		<transmission name="${namespace}/wrist_trans">
+			<type>transmission_interface/SimpleTransmission</type>
+			<joint name="${namespace}/wrist">
+				<hardwareInterface>${hw_interface}</hardwareInterface>
+			</joint>
+			<actuator name="${namespace}/wrist_motor">
+				<mechanicalReduction>1</mechanicalReduction>
+			</actuator>
+		</transmission>
+
+		<!-- End Effector -> Finger Left Transmission -->
+		<transmission name="${namespace}/finger_left_joint_trans">
+			<type>transmission_interface/SimpleTransmission</type>
+			<joint name="${namespace}/finger_left_joint">
+				<hardwareInterface>${hw_interface}</hardwareInterface>
+			</joint>
+			<actuator name="${namespace}/finger_left_joint_motor">
+				<mechanicalReduction>1</mechanicalReduction>
+			</actuator>
+		</transmission>
+
+		<!-- end Effector -> Finger Right Transmission -->
+		<transmission name="${namespace}/finger_right_joint_trans">
+			<type>transmission_interface/SimpleTransmission</type>
+			<joint name="${namespace}/finger_right_joint">
+				<hardwareInterface>${hw_interface}</hardwareInterface>
+			</joint>
+			<actuator name="${namespace}/finger_right_joint_motor">
+				<mechanicalReduction>1</mechanicalReduction>
+			</actuator>
+		</transmission>
+
+		<!-- Finger Left -> Finger Tip Left Transmission -->
+		<transmission name="${namespace}/finger_tip_left_joint_trans">
+			<type>transmission_interface/SimpleTransmission</type>
+			<joint name="${namespace}/finger_tip_left_joint">
+				<hardwareInterface>${hw_interface}</hardwareInterface>
+			</joint>
+			<actuator name="${namespace}/finger_tip_left_joint_motor">
+				<mechanicalReduction>1</mechanicalReduction>
+			</actuator>
+		</transmission>
+
+		<!-- Finger Right -> Finger Tip Right Transmission -->
+		<transmission name="${namespace}/finger_tip_right_joint_trans">
+			<type>transmission_interface/SimpleTransmission</type>
+			<joint name="${namespace}/finger_tip_right_joint">
+				<hardwareInterface>${hw_interface}</hardwareInterface>
+			</joint>
+			<actuator name="${namespace}/finger_tip_right_joint_motor">
+				<mechanicalReduction>1</mechanicalReduction>
+			</actuator>
+		</transmission>
+
+	</xacro:macro>
+</robot>
+

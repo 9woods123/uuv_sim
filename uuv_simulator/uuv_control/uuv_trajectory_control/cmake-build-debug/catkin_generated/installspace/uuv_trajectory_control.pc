@@ -1,0 +1,8 @@
+prefix=/usr/local
+
+Name: uuv_trajectory_control
+Description: Description of uuv_trajectory_control
+Version: 0.6.13
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

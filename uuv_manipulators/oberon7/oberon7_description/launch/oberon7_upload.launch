@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<launch>
+	<arg name="limited" default="false"/>
+	<arg name="transmission_hw_interface" default="hardware_interface/PositionJointInterface"/>
+	<arg name="parent" default="world"/>    
+	<arg name="namespace" default="oberon7"/>
+	<arg name="xyzpos" default="0.0 0.0 2.0"/>
+
+	<param unless="$(arg limited)" name="robot_description" command="$(find xacro)/xacro '$(find oberon7_description)/urdf/oberon7_robot.urdf.xacro' transmission_hw_interface:=$(arg transmission_hw_interface) namespace:=$(arg namespace) xyzpos:='$(arg xyzpos)' parent:=$(arg parent)"/>
+	
+	<param if="$(arg limited)" name="robot_description" command="$(find xacro)/xacro '$(find oberon7_description)/urdf/oberon7_robot.urdf.xacro' transmission_hw_interface:=$(arg transmission_hw_interface) namespace:=$(arg namespace) xyzpos:='$(arg xyzpos)' parent:=$(arg parent)"/>
+</launch>

@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<robot name="oberon7">
+    
+    <group name="arm">
+        <chain base_link="oberon7/base" tip_link="oberon7/end_effector"/>
+    </group>
+    
+    <group name="hand">
+        <link name="oberon7/finger_left"/>
+        <link name="oberon7/finger_tip_left"/>
+        <link name="oberon7/finger_right"/>
+        <link name="oberon7/finger_tip_right"/>
+    </group>
+
+    <disable_collisions link1="oberon7/base" link2="oberon7/forearm" reason="Never"/>
+    <disable_collisions link1="oberon7/base" link2="oberon7/shoulder_link" reason="Adjacent"/>
+    <disable_collisions link1="oberon7/elbow_link" link2="oberon7/end_effector" reason="Never"/>
+    <disable_collisions link1="oberon7/elbow_link" link2="oberon7/finger_left" reason="Never"/>
+    <disable_collisions link1="oberon7/elbow_link" link2="oberon7/finger_right" reason="Never"/>
+    <disable_collisions link1="oberon7/elbow_link" link2="oberon7/finger_tip_left" reason="Never"/>
+    <disable_collisions link1="oberon7/elbow_link" link2="oberon7/finger_tip_right" reason="Never"/>
+    <disable_collisions link1="oberon7/elbow_link" link2="oberon7/forearm" reason="Adjacent"/>
+    <disable_collisions link1="oberon7/elbow_link" link2="oberon7/shoulder_link" reason="Never"/>
+    <disable_collisions link1="oberon7/elbow_link" link2="oberon7/upper_arm" reason="Adjacent"/>
+    <disable_collisions link1="oberon7/elbow_link" link2="oberon7/wrist_link" reason="Never"/>
+    <disable_collisions link1="oberon7/end_effector" link2="oberon7/finger_left" reason="Adjacent"/>
+    <disable_collisions link1="oberon7/end_effector" link2="oberon7/finger_right" reason="Adjacent"/>
+    <disable_collisions link1="oberon7/end_effector" link2="oberon7/finger_tip_left" reason="Never"/>
+    <disable_collisions link1="oberon7/end_effector" link2="oberon7/finger_tip_right" reason="Never"/>
+    <disable_collisions link1="oberon7/end_effector" link2="oberon7/forearm" reason="Never"/>
+    <disable_collisions link1="oberon7/end_effector" link2="oberon7/wrist_link" reason="Adjacent"/>
+    <disable_collisions link1="oberon7/finger_left" link2="oberon7/finger_right" reason="Never"/>
+    <disable_collisions link1="oberon7/finger_left" link2="oberon7/finger_tip_left" reason="Adjacent"/>
+    <disable_collisions link1="oberon7/finger_left" link2="oberon7/finger_tip_right" reason="Never"/>
+    <disable_collisions link1="oberon7/finger_left" link2="oberon7/forearm" reason="Never"/>
+    <disable_collisions link1="oberon7/finger_left" link2="oberon7/wrist_link" reason="Never"/>
+    <disable_collisions link1="oberon7/finger_right" link2="oberon7/finger_tip_left" reason="Never"/>
+    <disable_collisions link1="oberon7/finger_right" link2="oberon7/finger_tip_right" reason="Adjacent"/>
+    <disable_collisions link1="oberon7/finger_right" link2="oberon7/forearm" reason="Never"/>
+    <disable_collisions link1="oberon7/finger_tip_left" link2="oberon7/finger_tip_right" reason="Never"/>
+    <disable_collisions link1="oberon7/finger_tip_left" link2="oberon7/forearm" reason="Never"/>
+    <disable_collisions link1="oberon7/finger_tip_left" link2="oberon7/wrist_link" reason="Never"/>
+    <disable_collisions link1="oberon7/finger_tip_right" link2="oberon7/forearm" reason="Never"/>
+    <disable_collisions link1="oberon7/finger_tip_right" link2="oberon7/wrist_link" reason="Never"/>
+    <disable_collisions link1="oberon7/forearm" link2="oberon7/upper_arm" reason="Never"/>
+    <disable_collisions link1="oberon7/forearm" link2="oberon7/wrist_link" reason="Adjacent"/>
+    <disable_collisions link1="oberon7/shoulder_link" link2="oberon7/upper_arm" reason="Adjacent"/>
+</robot>

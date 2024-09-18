@@ -1,0 +1,11 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: oberon7_description
+    relative_path: urdf/oberon7_robot.urdf.xacro
+    xacro_args: ""
+  SRDF:
+    relative_path: config/oberon7.srdf
+  CONFIG:
+    author_name: carson
+    author_email: c@c.com
+    generated_timestamp: 1643403453

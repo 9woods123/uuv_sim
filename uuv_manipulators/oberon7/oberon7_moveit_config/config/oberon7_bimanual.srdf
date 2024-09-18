@@ -1,0 +1,100 @@
+<?xml version="1.0"?>
+<robot name="oberon7">
+    
+    <group name="arm_r">
+        <chain base_link="oberon7_r/base" tip_link="oberon7_r/end_effector"/>
+    </group>
+    <group name="arm_l">
+        <chain base_link="oberon7_l/base" tip_link="oberon7_l/end_effector"/>
+    </group>
+    
+    <group name="hand_r">
+        <link name="oberon7_r/finger_left"/>
+        <link name="oberon7_r/finger_tip_left"/>
+        <link name="oberon7_r/finger_right"/>
+        <link name="oberon7_r/finger_tip_right"/>
+    </group>
+    <group name="hand_l">
+        <link name="oberon7_l/finger_left"/>
+        <link name="oberon7_l/finger_tip_left"/>
+        <link name="oberon7_l/finger_right"/>
+        <link name="oberon7_l/finger_tip_right"/>
+    </group>
+
+    <group name="two_arms">
+        <group name="arm_r"/>
+        <group name="arm_l"/>
+        <group name="hand_r"/>
+        <group name="hand_l"/>
+    </group>
+
+    <disable_collisions link1="oberon7_r/base" link2="oberon7_r/elbow_link" reason="Never"/>
+    <disable_collisions link1="oberon7_r/base" link2="oberon7_r/forearm" reason="Never"/>
+    <disable_collisions link1="oberon7_r/base" link2="oberon7_r/shoulder_link" reason="Adjacent"/>
+    <disable_collisions link1="oberon7_r/elbow_link" link2="oberon7_r/end_effector" reason="Never"/>
+    <disable_collisions link1="oberon7_r/elbow_link" link2="oberon7_r/finger_left" reason="Never"/>
+    <disable_collisions link1="oberon7_r/elbow_link" link2="oberon7_r/finger_right" reason="Never"/>
+    <disable_collisions link1="oberon7_r/elbow_link" link2="oberon7_r/finger_tip_left" reason="Never"/>
+    <disable_collisions link1="oberon7_r/elbow_link" link2="oberon7_r/finger_tip_right" reason="Never"/>
+    <disable_collisions link1="oberon7_r/elbow_link" link2="oberon7_r/forearm" reason="Adjacent"/>
+    <disable_collisions link1="oberon7_r/elbow_link" link2="oberon7_r/shoulder_link" reason="Never"/>
+    <disable_collisions link1="oberon7_r/elbow_link" link2="oberon7_r/upper_arm" reason="Adjacent"/>
+    <disable_collisions link1="oberon7_r/elbow_link" link2="oberon7_r/wrist_link" reason="Never"/>
+    <disable_collisions link1="oberon7_r/end_effector" link2="oberon7_r/finger_left" reason="Adjacent"/>
+    <disable_collisions link1="oberon7_r/end_effector" link2="oberon7_r/finger_right" reason="Adjacent"/>
+    <disable_collisions link1="oberon7_r/end_effector" link2="oberon7_r/finger_tip_left" reason="Never"/>
+    <disable_collisions link1="oberon7_r/end_effector" link2="oberon7_r/finger_tip_right" reason="Never"/>
+    <disable_collisions link1="oberon7_r/end_effector" link2="oberon7_r/forearm" reason="Never"/>
+    <disable_collisions link1="oberon7_r/end_effector" link2="oberon7_r/wrist_link" reason="Adjacent"/>
+    <disable_collisions link1="oberon7_r/finger_left" link2="oberon7_r/finger_right" reason="Never"/>
+    <disable_collisions link1="oberon7_r/finger_left" link2="oberon7_r/finger_tip_left" reason="Adjacent"/>
+    <disable_collisions link1="oberon7_r/finger_left" link2="oberon7_r/finger_tip_right" reason="Never"/>
+    <disable_collisions link1="oberon7_r/finger_left" link2="oberon7_r/forearm" reason="Never"/>
+    <disable_collisions link1="oberon7_r/finger_left" link2="oberon7_r/wrist_link" reason="Never"/>
+    <disable_collisions link1="oberon7_r/finger_right" link2="oberon7_r/finger_tip_left" reason="Never"/>
+    <disable_collisions link1="oberon7_r/finger_right" link2="oberon7_r/finger_tip_right" reason="Adjacent"/>
+    <disable_collisions link1="oberon7_r/finger_right" link2="oberon7_r/forearm" reason="Never"/>
+    <disable_collisions link1="oberon7_r/finger_tip_left" link2="oberon7_r/finger_tip_right" reason="Never"/>
+    <disable_collisions link1="oberon7_r/finger_tip_left" link2="oberon7_r/forearm" reason="Never"/>
+    <disable_collisions link1="oberon7_r/finger_tip_left" link2="oberon7_r/wrist_link" reason="Never"/>
+    <disable_collisions link1="oberon7_r/finger_tip_right" link2="oberon7_r/forearm" reason="Never"/>
+    <disable_collisions link1="oberon7_r/finger_tip_right" link2="oberon7_r/wrist_link" reason="Never"/>
+    <disable_collisions link1="oberon7_r/forearm" link2="oberon7_r/upper_arm" reason="Never"/>
+    <disable_collisions link1="oberon7_r/forearm" link2="oberon7_r/wrist_link" reason="Adjacent"/>
+    <disable_collisions link1="oberon7_r/shoulder_link" link2="oberon7_r/upper_arm" reason="Adjacent"/>
+
+    <disable_collisions link1="oberon7_l/base" link2="oberon7_l/elbow_link" reason="Never"/>
+    <disable_collisions link1="oberon7_l/base" link2="oberon7_l/forearm" reason="Never"/>
+    <disable_collisions link1="oberon7_l/base" link2="oberon7_l/shoulder_link" reason="Adjacent"/>
+    <disable_collisions link1="oberon7_l/elbow_link" link2="oberon7_l/end_effector" reason="Never"/>
+    <disable_collisions link1="oberon7_l/elbow_link" link2="oberon7_l/finger_left" reason="Never"/>
+    <disable_collisions link1="oberon7_l/elbow_link" link2="oberon7_l/finger_right" reason="Never"/>
+    <disable_collisions link1="oberon7_l/elbow_link" link2="oberon7_l/finger_tip_left" reason="Never"/>
+    <disable_collisions link1="oberon7_l/elbow_link" link2="oberon7_l/finger_tip_right" reason="Never"/>
+    <disable_collisions link1="oberon7_l/elbow_link" link2="oberon7_l/forearm" reason="Adjacent"/>
+    <disable_collisions link1="oberon7_l/elbow_link" link2="oberon7_l/shoulder_link" reason="Never"/>
+    <disable_collisions link1="oberon7_l/elbow_link" link2="oberon7_l/upper_arm" reason="Adjacent"/>
+    <disable_collisions link1="oberon7_l/elbow_link" link2="oberon7_l/wrist_link" reason="Never"/>
+    <disable_collisions link1="oberon7_l/end_effector" link2="oberon7_l/finger_left" reason="Adjacent"/>
+    <disable_collisions link1="oberon7_l/end_effector" link2="oberon7_l/finger_right" reason="Adjacent"/>
+    <disable_collisions link1="oberon7_l/end_effector" link2="oberon7_l/finger_tip_left" reason="Never"/>
+    <disable_collisions link1="oberon7_l/end_effector" link2="oberon7_l/finger_tip_right" reason="Never"/>
+    <disable_collisions link1="oberon7_l/end_effector" link2="oberon7_l/forearm" reason="Never"/>
+    <disable_collisions link1="oberon7_l/end_effector" link2="oberon7_l/wrist_link" reason="Adjacent"/>
+    <disable_collisions link1="oberon7_l/finger_left" link2="oberon7_l/finger_right" reason="Never"/>
+    <disable_collisions link1="oberon7_l/finger_left" link2="oberon7_l/finger_tip_left" reason="Adjacent"/>
+    <disable_collisions link1="oberon7_l/finger_left" link2="oberon7_l/finger_tip_right" reason="Never"/>
+    <disable_collisions link1="oberon7_l/finger_left" link2="oberon7_l/forearm" reason="Never"/>
+    <disable_collisions link1="oberon7_l/finger_left" link2="oberon7_l/wrist_link" reason="Never"/>
+    <disable_collisions link1="oberon7_l/finger_right" link2="oberon7_l/finger_tip_left" reason="Never"/>
+    <disable_collisions link1="oberon7_l/finger_right" link2="oberon7_l/finger_tip_right" reason="Adjacent"/>
+    <disable_collisions link1="oberon7_l/finger_right" link2="oberon7_l/forearm" reason="Never"/>
+    <disable_collisions link1="oberon7_l/finger_tip_left" link2="oberon7_l/finger_tip_right" reason="Never"/>
+    <disable_collisions link1="oberon7_l/finger_tip_left" link2="oberon7_l/forearm" reason="Never"/>
+    <disable_collisions link1="oberon7_l/finger_tip_left" link2="oberon7_l/wrist_link" reason="Never"/>
+    <disable_collisions link1="oberon7_l/finger_tip_right" link2="oberon7_l/forearm" reason="Never"/>
+    <disable_collisions link1="oberon7_l/finger_tip_right" link2="oberon7_l/wrist_link" reason="Never"/>
+    <disable_collisions link1="oberon7_l/forearm" link2="oberon7_l/upper_arm" reason="Never"/>
+    <disable_collisions link1="oberon7_l/forearm" link2="oberon7_l/wrist_link" reason="Adjacent"/>
+    <disable_collisions link1="oberon7_l/shoulder_link" link2="oberon7_l/upper_arm" reason="Adjacent"/>
+</robot>

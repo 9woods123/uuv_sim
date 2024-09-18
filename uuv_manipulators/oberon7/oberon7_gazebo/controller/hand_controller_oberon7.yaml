@@ -1,0 +1,24 @@
+hand_controller:
+    type: position_controllers/JointTrajectoryController
+    joints:
+        - oberon7/finger_left_joint
+        - oberon7/finger_tip_left_joint
+        - oberon7/finger_right_joint
+        - oberon7/finger_tip_right_joint
+    constraints:
+        goal_time: 0.6
+        stopped_velocity_tolerance: 0.05
+        finger_left_joint: {trajectory: 0.1, goal: 0.1}
+        finger_tip_left_joint: {trajectory: 0.1, goal: 0.1}
+        finger_right_joint: {trajectory: 0.1, goal: 0.1}
+        finger_tip_right_joint: {trajectory: 0.1, goal: 0.1}
+    stop_trajectory_duration: 0.5
+    state_publish_rate: 25
+    action_monitor_rate: 10
+joint_group_position_controller:
+    type: position_controllers/JointGroupPositionController 
+    joints:
+        - oberon7/finger_left_joint
+        - oberon7/finger_tip_left_joint
+        - oberon7/finger_right_joint
+        - oberon7/finger_tip_right_joint

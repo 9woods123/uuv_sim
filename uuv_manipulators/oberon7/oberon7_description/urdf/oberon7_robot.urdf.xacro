@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://wiki.ros.org/xacro" name="oberon7">
+	<xacro:arg name="transmission_hw_interface" default="hardware_interface/PositionJointInterface"/>
+	<xacro:arg name="parent" default="world"/>
+	<xacro:arg name="namespace" default="oberon7"/>
+	<xacro:arg name="xyzpos" default="0.0 0.0 2.0"/>
+
+	<!-- common stuff -->
+	<xacro:include filename="$(find oberon7_description)/urdf/common.gazebo.xacro"/>
+
+	<!-- oberon7 -->
+	<xacro:include filename="$(find oberon7_description)/urdf/oberon7.urdf.xacro"/>
+	<xacro:oberon7_arm transmission_hw_interface="$(arg transmission_hw_interface)" namespace="$(arg namespace)"/>
+
+	<!-- Link robot to world -->
+	<!-- Consider using an if else statement for the world param... -->
+	<!-- also consider calling this anchor if doesn't exist -->
+	<link name="$(arg parent)"/>
+
+	<joint name="anchor_joint" type="fixed">
+		<parent link="$(arg parent)"/>
+		<child link="$(arg namespace)/base"/>
+		<origin rpy="0 0 0" xyz="$(arg xyzpos)"/>
+	</joint>
+</robot>
+

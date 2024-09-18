@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+
+<sdf version="1.5">
+  <model name="duck">
+    <static>true</static>
+    <link name="duck">
+      <visual name="basic">
+        <cast_shadows>true</cast_shadows>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <uri>model://duck.dae</uri>
+            <scale>1.0 1.0 1.0</scale>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+  </model>
+</sdf>

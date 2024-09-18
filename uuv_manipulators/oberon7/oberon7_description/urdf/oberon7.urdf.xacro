@@ -1,0 +1,385 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://wiki.ros.org/xacro">
+	<xacro:include filename="$(find oberon7_description)/urdf/oberon7.transmission.xacro"/>
+	<xacro:include filename="$(find oberon7_description)/urdf/oberon7.gazebo.xacro"/>
+
+	<xacro:macro name="oberon7_arm" params="transmission_hw_interface namespace">
+
+		<!-- Base Link -->
+		<link name="${namespace}/base">
+			<inertial>
+		    	<origin rpy="0 0 0" xyz="-0.101581 -0.001371 -0.009781"/>
+		    	<mass value="9.67467717018"/>
+		    	<inertia ixx="0.511731678147" ixy="0.0" ixz="0.0" iyy="0.836771724144" iyz="0.0" izz="0.958032978152"/>
+		    </inertial>
+		    <visual>
+		    	<origin rpy="0 0 0" xyz="0 0 0"/>
+		    	<geometry>
+                    <mesh filename="package://oberon7_description/meshes/serial_arm/visual/Base.dae"/>
+		      	</geometry>
+		    </visual>
+		    <collision>
+		     	<origin rpy="0 0 0" xyz="0 0 0"/>
+		      	<geometry>
+                    <mesh filename="package://oberon7_description/meshes/serial_arm/collision/Base.stl"/>
+		      	</geometry>
+		    </collision>
+		</link>
+
+		<!-- Shoulder Link -->
+		<link name="${namespace}/shoulder_link">
+    		<inertial>
+      			<origin rpy="0 0 0" xyz="0.039670 0.005441 0.017383"/>
+      			<mass value="6.72225246901"/>
+      			<inertia ixx="0.425839738294" ixy="0.0" ixz="0.0" iyy="0.513257548564" iyz="0.0" izz="0.295765413777"/>
+    		</inertial>
+    		<visual>
+      			<origin rpy="0 0 0" xyz="0 0 0"/>
+      			<geometry>
+                    <mesh filename="package://oberon7_description/meshes/serial_arm/visual/ShoulderLink.dae"/>
+      			</geometry>
+    		</visual>
+    		<collision>
+      			<origin rpy="0 0 0" xyz="0.039670 0.005441 0.017383"/>
+      			<geometry>
+    				<cylinder length="0.239627" radius="0.068184"/>
+      			</geometry>
+   			</collision>
+ 		</link>
+
+        <!-- Base -> Shoulder Joint -->
+        <joint name="${namespace}/azimuth" type="revolute">
+            <parent link="${namespace}/base"/>
+            <child link="${namespace}/shoulder_link"/>
+            <axis xyz="0 0 1"/>
+            <dynamics damping="50" friction="120"/>
+            <limit effort="200" lower="-1.04719758" upper="1.04719758" velocity="0.17"/>
+        </joint>
+
+
+ 		<!-- Upper Arm Link -->
+ 		<link name="${namespace}/upper_arm">
+   			<inertial>
+      			<origin rpy="0 0 0" xyz="0.312501 0.017478 -0.000002"/>
+      			<mass value="12.4443999072"/>
+      			<inertia ixx="0.378234483246" ixy="0.0" ixz="0.0" iyy="4.11488180504" iyz="0.0" izz="4.15420854645"/>
+    		</inertial>
+    		<visual>
+      			<origin rpy="0 0 0" xyz="0 0 0"/>
+      			<geometry>
+                    <mesh filename="package://oberon7_description/meshes/serial_arm/visual/UpperArm.dae"/>
+      			</geometry>
+    		</visual>
+    		<collision>
+      			<origin rpy="0 1.57079632679 0" xyz="0.312501 0.017478 -0.000002"/>
+      			<geometry>
+        			<cylinder length="0.616809" radius="0.0709445"/>
+      			</geometry>
+    		</collision>
+  		</link>
+
+        <!-- Shoulder -> Upper Arm Joint -->
+        <joint name="${namespace}/shoulder" type="revolute">
+            <parent link="${namespace}/shoulder_link"/>
+            <child link="${namespace}/upper_arm"/>
+            <origin rpy="1.57079632679 0 0" xyz="0.06955 0.00015 0.01536"/>
+            <axis xyz="0 0 1"/>
+            <dynamics damping="50" friction="120"/>
+            <limit effort="5000" lower="-0.8591" upper="0.6856" velocity="0.17"/>
+        </joint>
+
+  		<!-- Elbow Link -->
+  		<link name="${namespace}/elbow_link">
+            <inertial>
+                <origin rpy="0 0 0" xyz="0.125269 -0.074675 0.0"/>
+                <mass value="10.3145088675"/>
+                <inertia ixx="0.717197873733" ixy="0.0" ixz="0.0" iyy="0.724090834438" iyz="0.0" izz="1.0276175034"/>
+            </inertial>
+            <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://oberon7_description/meshes/serial_arm/visual/ElbowLink.dae"/>
+                </geometry>
+            </visual>
+            <collision>
+                <origin rpy="0 1.57079632679 1.57079632679" xyz="0.125269 -0.074675 0.0"/>
+                <geometry>
+                    <cylinder length="0.245312" radius="0.077562"/>
+                </geometry>
+            </collision>
+  		</link>
+
+        <!-- Elbow -> Upper Arm Joint-->
+        <joint name="${namespace}/elbow" type="revolute">
+            <parent link="${namespace}/upper_arm"/>
+            <child link="${namespace}/elbow_link"/>
+            <origin rpy="0 0 0" xyz="0.55616 -0.01229 0"/>
+            <dynamics damping="50" friction="120"/>
+            <axis xyz="0 0 1"/>
+            <limit effort="300" lower="-1.4839" upper="1.04719758" velocity=".13"/>
+        </joint>
+
+
+        <!-- Forearm Link -->
+        <link name="${namespace}/forearm">
+            <inertial>
+                <origin rpy="0 0 0" xyz="0 0 0.157978803149"/>
+                <mass value="8.54626175585"/>
+                <inertia ixx="0.961794420773" ixy="0.0" ixz="0.0" iyy="0.961902303084" iyz="0.0" izz="0.326840256692"/>
+            </inertial>
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://oberon7_description/meshes/serial_arm/visual/Forearm.dae"/>
+                </geometry>
+            </visual>
+            <collision>
+                <origin rpy="0 0 0" xyz="0 0 0.157978803149"/>
+                <geometry>
+                    <cylinder length="0.334827" radius="0.0757275"/>
+                </geometry>
+            </collision>
+        </link>
+
+        <!-- Elbow -> Forearm Joint -->
+        <joint name="${namespace}/roll" type="revolute">
+            <parent link="${namespace}/elbow_link"/>
+            <child link="${namespace}/forearm"/>
+            <origin rpy="1.57079632679 0 0" xyz="0.1349014 -0.1936267 0"/>
+            <axis xyz="0 0 1"/>
+            <dynamics damping="50" friction="120"/>
+            <limit effort="200" lower="-2.356194555" upper="2.356194555" velocity=".085"/>
+        </joint>
+
+
+        <!-- Wrist Link -->
+        <link name="${namespace}/wrist_link">
+            <inertial>
+                <origin rpy="0 0 0" xyz="0.104016 0.003308 -0.000027"/>
+                <mass value="3.9024235777"/>
+                <inertia ixx="0.104282209379" ixy="0.0" ixz="0.0" iyy="0.211536636614" iyz="0.0" izz="0.20526721979"/>
+            </inertial>
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://oberon7_description/meshes/serial_arm/visual/Wrist.dae"/>
+                </geometry>
+            </visual>
+            <collision>
+                <origin rpy="0 1.57079632679 0" xyz="0.104016 0.003308 -0.000027"/>
+                <geometry>
+                    <cylinder length="0.219204" radius="0.065187"/>
+                </geometry>
+            </collision>
+        </link>
+
+        <!-- Forearm -> Wrist Joint -->
+        <joint name="${namespace}/pitch" type="revolute">
+            <parent link="${namespace}/forearm"/>
+            <child link="${namespace}/wrist_link"/>
+            <origin rpy="-1.57079632679 -1.57079632679 0" xyz="0 0 0.31595760629823427"/>
+            <axis xyz="0 0 1"/>
+            <dynamics damping="50" friction="120"/>
+            <limit effort="200" lower="-1.57079637" upper="1.57079637" velocity=".26"/>
+        </joint>
+
+
+        <!-- Ground Base -->
+        <link name="${namespace}/end_effector">
+            <inertial>
+                <origin rpy="0 0 0" xyz="0.024426 -0.000000 -0.000014"/>
+                <mass value="3.46114581082"/>
+                <inertia ixx="0.0774521740658" ixy="0.0" ixz="0.0" iyy="0.0536142648454" iyz="0.0" izz="0.055705568526"/>
+            </inertial>
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://oberon7_description/meshes/parallel_gripper/visual/BaseGripper.dae"/>
+                </geometry>
+            </visual>
+            <collision>
+                <origin rpy="0 0 0" xyz="0.024426 -0.000000 -0.000014"/>
+                <geometry>
+                    <box size="0.074326 0.117427 0.114298"/>
+                </geometry>
+            </collision>
+        </link>
+
+        <!-- Wrist -> End Effector Joint -->
+        <joint name="${namespace}/wrist" type="continuous">
+            <parent link="${namespace}/wrist_link"/>
+            <child link="${namespace}/end_effector"/>
+            <origin rpy="0 0 0" xyz="0.19304 0 0"/>
+            <axis xyz="1 0 0"/>
+            <dynamics damping="10" friction="5"/>
+        </joint>
+
+
+        <!-- Finger Left -->
+        <link name="${namespace}/finger_left">
+            <inertial>
+                <origin rpy="0 0 0" xyz="0.025268 -0.001931 -0.000079"/>
+                <mass value="0.879770511849"/>
+                <inertia ixx="0.00378330605849" ixy="0.0" ixz="0.0" iyy="0.00886148330217" iyz="0.0" izz="0.0091923080428"/>
+            </inertial>
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://oberon7_description/meshes/parallel_gripper/visual/Finger.dae"/>
+                </geometry>
+            </visual>
+            <collision>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://oberon7_description/meshes/parallel_gripper/visual/Finger.dae"/>
+                </geometry>
+                <surface>
+                    <friction>
+                        <ode>
+                            <mu>1000.0</mu>
+                            <mu2>1000.0</mu2>
+                        </ode>
+                    </friction>
+                </surface>
+            </collision>
+        </link>
+
+        <!-- End Effector -> Finger Left Joint -->
+        <joint name="${namespace}/finger_left_joint" type="revolute">
+            <parent link="${namespace}/end_effector"/>
+            <child link="${namespace}/finger_left"/>
+            <origin rpy="0 0 0" xyz="0.0444267 0.0391376 0"/>
+            <axis xyz="0 0 1"/>
+            <dynamics damping="5" friction="10"/>
+            <limit effort="3000" lower="0" upper="1.04709283144" velocity="0.15"/>
+        </joint>
+
+
+        <!-- Finger Tip Left  -->
+        <link name="${namespace}/finger_tip_left">
+            <inertial>
+                <origin rpy="0 0 0" xyz="0.027744 0.017278 0.0"/>
+                <mass value="1.12550524054"/>
+                <inertia ixx="0.00611047001819" ixy="0.0" ixz="0.0" iyy="0.0134903081039" iyz="0.0" izz="0.0121555609857"/>
+            </inertial>
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://oberon7_description/meshes/parallel_gripper/visual/FingerTip.dae"/>
+                </geometry>
+            </visual>
+            <collision>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://oberon7_description/meshes/parallel_gripper/visual/FingerTip.dae"/>
+                </geometry>
+                <surface>
+                    <friction>
+                        <ode>
+                            <mu>1000.0</mu>
+                            <mu2>1000.0</mu2>
+                        </ode>
+                    </friction>
+                </surface>
+            </collision>
+        </link>
+
+        <!-- Finger -> Finger Tip Left Joint -->
+        <joint name="${namespace}/finger_tip_left_joint" type="revolute">
+            <parent link="${namespace}/finger_left"/>
+            <child link="${namespace}/finger_tip_left"/>
+            <origin rpy="3.14159265359 0 0" xyz="0.06431 0 0"/>
+            <axis xyz="0 0 1"/>
+            <dynamics damping="5" friction="10"/>
+            <limit effort="0" lower="0" upper="0" velocity="0"/>
+        </joint>
+
+        <!-- Finger Right -->
+        <link name="${namespace}/finger_right">
+            <inertial>
+                <origin rpy="0 0 0" xyz="0.025268 -0.001931 -0.000079"/>
+                <mass value="0.879770511849"/>
+                <inertia ixx="0.00378330605849" ixy="0.0" ixz="0.0" iyy="0.00886148330217" iyz="0.0" izz="0.0091923080428"/>
+            </inertial>
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://oberon7_description/meshes/parallel_gripper/visual/Finger.dae"/>
+                </geometry>
+            </visual>
+            <collision>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://oberon7_description/meshes/parallel_gripper/visual/Finger.dae"/>
+                </geometry>
+                <surface>
+                    <friction>
+                        <ode>
+                            <mu>1000.0</mu>
+                            <mu2>1000.0</mu2>
+                        </ode>
+                    </friction>
+                </surface>
+            </collision>
+        </link>
+
+        <!-- End Effector -> Finger Right Joint -->
+        <joint name="${namespace}/finger_right_joint" type="revolute">
+            <parent link="${namespace}/end_effector"/>
+            <child link="${namespace}/finger_right"/>
+            <origin rpy="3.14159265359 3.14159265359 3.14159265359" xyz="0.0444267 -0.0391376 0"/>
+            <axis xyz="0 0 -1"/>
+            <dynamics damping="5" friction="10"/>
+            <limit effort="3000" lower="0" upper="1.04709283144" velocity="0.15"/>
+        </joint>
+
+
+        <!-- Finger Tip Right  -->
+        <link name="${namespace}/finger_tip_right">
+            <inertial>
+                <origin rpy="0 0 0" xyz="0.027744 0.017278 0.0"/>
+                <mass value="1.12550524054"/>
+                <inertia ixx="0.00611047001819" ixy="0.0" ixz="0.0" iyy="0.0134903081039" iyz="0.0" izz="0.0121555609857"/>
+            </inertial>
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://oberon7_description/meshes/parallel_gripper/visual/FingerTip.dae"/>
+                </geometry>
+            </visual>
+            <collision>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://oberon7_description/meshes/parallel_gripper/visual/FingerTip.dae"/>
+                </geometry>
+                <surface>
+                    <friction>
+                        <ode>
+                            <mu>1000.0</mu>
+                            <mu2>1000.0</mu2>
+                        </ode>
+                    </friction>
+                </surface>
+            </collision>
+        </link>
+
+        <!-- Finger Right -> Finger Tip Right Joint -->
+        <joint name="${namespace}/finger_tip_right_joint" type="revolute">
+            <parent link="${namespace}/finger_right"/>
+            <child link="${namespace}/finger_tip_right"/>
+            <origin rpy="0 0 0" xyz="0.06431 0 0"/>
+            <axis xyz="0 0 1"/>
+            <dynamics damping="5" friction="10"/>
+            <limit effort="0" lower="0" upper="0" velocity="0"/>
+        </joint>
+
+        <!-- End of links and joints definitions -->
+
+        <!-- Call a couple of xacros -->
+        <!-- Transmission -->
+        <xacro:oberon7_arm_transmission hw_interface="${transmission_hw_interface}" namespace="${namespace}"/>
+        <!-- Gazebo -->
+        <xacro:oberon7_arm_gazebo namespace="${namespace}"/>
+
+    </xacro:macro>
+</robot>
