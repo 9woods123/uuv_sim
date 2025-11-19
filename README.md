@@ -13,13 +13,10 @@ On Ubuntu, run:
 ```bash
 sudo apt-get update && sudo apt-get install -y \
    nvidia-cuda-toolkit \
-   python3-vcstool \
    python3-catkin-tools
+
+pip3 install scipy
 ```
-
-> Note: If your system does not require GPU support, you can omit `nvidia-cuda-toolkit`.
-
----
 
 ## 2. Create a Workspace and Import the Repository
 
