@@ -2,9 +2,12 @@
 
 # UUV Simulation Setup Guide
 
-This README provides step-by-step instructions to clone, install, and build the `uuv_sim` repository along with its dependencies.
 
----
+
+This README provides step-by-step instructions to clone, install, and build the `uuv_sim` repository along with its dependencies.
+I fixed some bugs in [uuv_simulator](https://github.com/uuvsimulator/uuv_simulator), enabling trajectory interaction. Using this, I successfully navigated the ECA_9 AUV to follow my planned trajectory.
+Furthermore, I made additional adjustments to the previous `uuv_simulator` to make it compatible with Ubuntu 20.04.
+
 
 ## 1. Install Core Dependencies
 
